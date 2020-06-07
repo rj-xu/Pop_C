@@ -1,25 +1,19 @@
 #include "../include/pop_c.h"
 
+INTERFACE(SayInter)
+{
+    FUNC(SayInter, void, SayName);
+    FUNC(SayInter, void, SayHello);
+};
+
 ABSTRACT(Animal)
 {
-    char name[30];
-
-    void (*SetName)(Animal * _this, const char *name);
-    void (*SayHello)(Animal * _this);
+    INHERIT(SayInter);
+    FUNC(Animal, void, SetName, const char *name);
+    char _name[30];
 };
 
 CLASS(Mouse)
 {
-    INHERIT(Animal);
-};
-
-CLASS(Cat)
-{
-    INHERIT(Animal);
-};
-
-CLASS(Dog)
-{
-    char master[30];
     INHERIT(Animal);
 };

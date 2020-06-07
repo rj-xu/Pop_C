@@ -52,7 +52,7 @@
                 "-E",
                 "${file}",
                 ">",
-                "./build/${fileBasenameNoExtension}.i"
+                "./build/${fileBasename}.i"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
