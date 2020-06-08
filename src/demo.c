@@ -3,7 +3,7 @@
 
 #include "demo.h"
 
-// SayInter
+// ISay
 
 // Animal
 METHOD(Animal, void, SetName, const char *name)
@@ -13,7 +13,7 @@ METHOD(Animal, void, SetName, const char *name)
 
 ABSTRACT_CTOR(Animal, const char *name)
 {
-    BIND(Animal, SetName);
+    BIND(_Animal, SetName);
     _this->SetName(_this, name);
 }
 
@@ -22,15 +22,23 @@ ABSTRACT_DTOR(Animal)
 }
 
 // Mouse
-VIRTUAL_METHOD(SayInter, Mouse, void, SayHello)
+VIRTUAL_METHOD(ISay, Mouse, void, SayName)
+{
+    Animal *_this_animal = SUPER(Animal, SUB(ISay, Mouse, _THIS));
+    printf("Hi, I'm %s!\n", _this_animal->_name);
+}
+
+VIRTUAL_METHOD(ISay, Mouse, void, SayHello)
 {
     printf("Zi!\n");
 }
 
-CLASS_CTOR(Mouse)
+CLASS_CTOR(Mouse, const char *name)
 {
-    SUPER_CTOR(Animal, "Jerry");
-    OVERRIDE(Animal.SayInter, Mouse, SayHello);
+    SUPER_CTOR(Animal, name);
+
+    OVERRIDE(ISay, Mouse, SayName);
+    OVERRIDE(ISay, Mouse, SayHello);
 }
 
 CLASS_DTOR(Mouse)
@@ -42,22 +50,13 @@ int main(int argc, char *argv[])
 {
     printf("Hello world!\n");
 
-    Mouse *jerry = NEW(Mouse, jerry);
+    Mouse *jerry = NEW(Mouse, jerry, "Jerry");
 
-    Animal *animalList[3] = {0};
+    ISay *say = SUPER(ISay, jerry);
+    say->SayName(&say);
+    say->SayHello(&say);
 
-    // animalList[0] = SUPER(Animal, tom);
-    animalList[1] = SUPER(Animal, jerry);
-    // animalList[2] = SUPER(Animal, dog);
-
-    for (int i = 1; i < 2; i++)
-    {
-        animalList[i]->SayHello(animalList[i]);
-    }
-
-    // DELETE(Dog, dog);
     DELETE(Mouse, jerry);
-    // DELETE(Cat, tom);
 
     getchar();
     getchar();

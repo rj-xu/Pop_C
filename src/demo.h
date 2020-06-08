@@ -1,19 +1,21 @@
 #include "../include/pop_c.h"
 
-INTERFACE(SayInter)
+INTERFACE(ISay)
 {
-    FUNC(SayInter, void, SayName);
-    FUNC(SayInter, void, SayHello);
+    VIRTUAL_FUNC(ISay, ISay, void, SayName);
+    VIRTUAL_FUNC(ISay, ISay, void, SayHello);
 };
 
 ABSTRACT(Animal)
 {
-    INHERIT(SayInter);
-    FUNC(Animal, void, SetName, const char *name);
+    _FUNC(Animal, void, SetName, const char *name);
     char _name[30];
 };
 
 CLASS(Mouse)
 {
     INHERIT(Animal);
+    INHERIT(ISay);
+    VIRTUAL_FUNC(ISay, Mouse, void, SayName);
+    VIRTUAL_FUNC(ISay, Mouse, void, SayHello);
 };

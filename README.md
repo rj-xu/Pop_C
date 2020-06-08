@@ -1,38 +1,44 @@
 # Pop C
 
-Write C like C++ using specific macros and naming rules.
+Write C code like C++ OOP using Macro.
 
 ## Features
 
-| Feature        | Status | Note                              |
-| -------------- | ------ | --------------------------------- |
-| Class          | Done   | Use macro ```CLASS```             |
-| Abstract Class | Done   | Use macro ```ABSTRACT```          |
-| Interface      | Doing  | Use macro ```INTERFACE```         |
-| Constructor    | Done   | Use macro ```CLASS_CTOR```        |
-| Destructor     | Done   | Use macro ```CLASS_DTOR```        |
-| New            | Done   | Use macro ```NEW```               |
-| Delete         | Done   | Use macro ```DELETE```            |
-| Inherit        | Done   | Use macro ```INHERIT```           |
-| Overwrite      | Done   | Use macro ```OVERWRITE```         |
-| Super & Sub    | Doing  | Use macro ```SUPER``` & ```SUB``` |
-| Lambda         | Done   | Use macro ```LAMBDA```            |ly
-| Namespace      | Done   | Add name prefix ```Namespace```   |
-| Private        | Done   | Add name prefix ```_```           |
+| Macro and rule                              | Usages                                      |
+| ------------------------------------------- | ------------------------------------------- |
+| ```INTERFACE```                             | Interface                                   |
+| ```ABSTRACT```                              | Abstract Class                              |
+| ```CLASS```                                 | Class                                       |
+| ```CLASS_CTOR, ABSTRACT_CTOR, SUPER_CTOR``` | Constructor                                 |
+| ```CLASS_DTOR, ABSTRACT_DTOR, SUPER_DTOR``` | Destructor                                  |
+| ```NEW, DELETE```                           | New and Delete                              |
+| ```FUNC, METHOD```                          | Public Function Declaration and Definition  |
+| ```_FUNC, _METHOD```                        | Private Function Declaration and Definition |
+| ```VIRTUAL_FUNC, VIRTUAL_METHOD```          | Virtual Function Declaration and Definition |
+| ```INHERIT```                               | Inheritance                                 |
+| ```BIND```                                  | Binding                                     |
+| ```OVERRIDE```                              | Override                                    |
+| ```SUPER, SUPER_2, SUPER_3```               | Super                                       |
+| ```Sub, Sub_2, SUb_3```                     | Sub                                         |
+| ```_this, _THIS```                          | This Pointer                                |
+| ```SWITCH```                                | Sub then Super                              |
+| ```LAMBDA```                                | Lambda                                      |
+| ```Namspace, NAMESPACE```                   | Namespace                                   |
+| ```_, __```                                 | Private                                     |
+
+## C Version
+
+C99, GCC
 
 ## Todo
 
 - List initialize
-- Protected
-- Macro variable name
+- Format names of macro variable
+- Enum class
+- Vector
+- Map
+- String
 
 ## Issues
 
-- Destructor and All Methods are not virtual: Normal Inheritance. Son must do ```SUPER_CTOR``` first in own ```CLASS_CTOR``` and do ```SUPER_DTOR``` last in own ```CLASS_DTOR```.
-- Destructor is virtual: Base Class. Use macro ```#VIRTUAL_DTOR, SUB, OVERWRITE```.
-- Destructor is pure virtual: Abstract Base Class.
-- Method is virtual
-- Method is pure virtual
-- Destructor and All Methods are pure virtual: Interface
-
-
+- Can not override virtual destructor
