@@ -87,11 +87,16 @@
 
 // Private Function Definition
 #define _METHOD(Class, return_type, func, type_args...) \
-    return_type _##Class##func(Class *_this, ##type_args)
+    return_type _##Class##_##func(Class *_this, ##type_args)
 
 // Virtual Function Definition
 #define VIRTUAL_METHOD(Base, Class, return_type, func, type_args...) \
     return_type Class##func(Base **_base, ##type_args)
+
+
+#define _VIRTUAL
+// Virtual
+#define VIRTUAL /_VIRTUAL/
 
 // Inherit
 #define INHERIT(Father) \

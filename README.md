@@ -38,6 +38,7 @@ C99, GCC
 - Vector
 - Map
 - String
+- Keyword ```VIRTUAL```
 
 ## Issues
 

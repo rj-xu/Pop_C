@@ -6,15 +6,15 @@
 // ISay
 
 // Animal
-METHOD(Animal, void, SetName, const char *name)
+_METHOD(Animal, void, SetName, const char *name)
 {
     strcpy(_this->_name, name);
 }
 
 ABSTRACT_CTOR(Animal, const char *name)
 {
-    BIND(_Animal, SetName);
-    _this->SetName(_this, name);
+    BIND(_Animal, _SetName);
+    _this->_SetName(_this, name);
 }
 
 ABSTRACT_DTOR(Animal)
