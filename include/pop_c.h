@@ -15,9 +15,11 @@
     void __##Class##Dtor();     \
     struct Class
 
+// Abstract Constructor
 #define ABSTRACT_CTOR(Class, type_args...) \
     void __##Class##Ctor(Class *_this, ##type_args)
 
+// Abstract Destructor
 #define ABSTRACT_DTOR(Class) \
     void __##Class##Dtor(Class *_this)
 
@@ -30,6 +32,7 @@
     int __Delete##Class();      \
     struct Class
 
+// Class Constructor
 #define CLASS_CTOR(Class, type_args...)          \
     int __New##Class(Class **c_ptr)              \
     {                                            \
@@ -40,6 +43,7 @@
     }                                            \
     void __##Class##Ctor(Class *_this, ##type_args)
 
+// Class Destructor
 #define CLASS_DTOR(Class)         \
     int __Delete##Class(Class *c) \
     {                             \
@@ -51,7 +55,7 @@
     }                             \
     void __##Class##Dtor(Class *_this)
 
-// New and Delete
+// New
 #define NEW(Class, c, args...)          \
     ({                                  \
         {                               \
@@ -61,6 +65,7 @@
         c;                              \
     })
 
+// Delete
 #define DELETE(Class, c) \
     (__Delete##Class(c))
 
