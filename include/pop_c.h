@@ -14,6 +14,12 @@
 #define FUNC(Class, return_type, func, type_args...) \
     return_type (*func)(Class * _this, ##type_args)
 
+#define _FUNC(Class, return_type, func, type_args...) \
+    return_type (*_func)(Class * _this, ##type_args)
+
+#define VIRTUAL_FUNC(Base, Class, return_type, func, type_args...) \
+    return_type (*func)(Base * _this, ##type_args)
+
 // Method Definition
 #define METHOD(Class, return_type, func, type_args...) \
     return_type Class##func(Class *_this, ##type_args)
