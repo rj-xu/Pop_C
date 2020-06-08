@@ -4,7 +4,7 @@ Write C code like C++ OOP using Macro.
 
 ## Features
 
-| Macro and rule                              | Usages                                      |
+| Macro and Naming Rule                       | Usage                                       |
 | ------------------------------------------- | ------------------------------------------- |
 | ```INTERFACE```                             | Interface                                   |
 | ```ABSTRACT```                              | Abstract Class                              |
@@ -20,7 +20,7 @@ Write C code like C++ OOP using Macro.
 | ```OVERRIDE```                              | Override                                    |
 | ```SUPER, SUPER_2, SUPER_3```               | Super                                       |
 | ```Sub, Sub_2, SUb_3```                     | Sub                                         |
-| ```_this, _THIS```                          | This Pointer                                |
+| ```_this, _base, _THIS```                   | This Pointer                                |
 | ```SWITCH```                                | Sub then Super                              |
 | ```LAMBDA```                                | Lambda                                      |
 | ```Namspace, NAMESPACE```                   | Namespace                                   |
