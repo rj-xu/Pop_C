@@ -13,8 +13,8 @@ _METHOD(Animal, void, SetName, const char *name)
 
 ABSTRACT_CTOR(Animal, const char *name)
 {
-    BIND(_Animal, _SetName);
-    _this->_SetName(_this, name);
+    BIND(Animal, _SetName);
+    DO(_this, _SetName, name);
 }
 
 ABSTRACT_DTOR(Animal)
@@ -22,13 +22,13 @@ ABSTRACT_DTOR(Animal)
 }
 
 // Mouse
-VIRTUAL_METHOD(ISay, Mouse, void, SayName)
+VMETHOD(ISay, Mouse, void, SayName)
 {
-    Animal *_this_animal = SUPER(Animal, SUB(ISay, Mouse, _THIS));
-    printf("Hi, I'm %s!\n", _this_animal->_name);
+    _THIS_SW(Animal, ISay, Mouse);
+    printf("Hi, I'm %s!\n", _this->_name);
 }
 
-VIRTUAL_METHOD(ISay, Mouse, void, SayHello)
+VMETHOD(ISay, Mouse, void, SayHello)
 {
     printf("Zi!\n");
 }
@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
     Mouse *jerry = NEW(Mouse, jerry, "Jerry");
 
     ISay *say = SUPER(ISay, jerry);
-    say->SayName(&say);
-    say->SayHello(&say);
+    DO(say, SayName);
+    DO(say, SayHello);
 
     DELETE(Mouse, jerry);
 

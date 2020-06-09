@@ -2,8 +2,8 @@
 
 INTERFACE(ISay)
 {
-    VIRTUAL_FUNC(ISay, ISay, void, SayName);
-    VIRTUAL_FUNC(ISay, ISay, void, SayHello);
+    VBFUNC(ISay, void, SayName);
+    VBFUNC(ISay, void, SayHello);
 };
 
 ABSTRACT(Animal)
@@ -16,6 +16,6 @@ CLASS(Mouse)
 {
     INHERIT(Animal);
     INHERIT(ISay);
-    VIRTUAL_FUNC(ISay, Mouse, void, SayName);
-    VIRTUAL_FUNC(ISay, Mouse, void, SayHello);
+    VFUNC(ISay, void, SayName);
+    VFUNC(ISay, void, SayHello);
 };

@@ -1,7 +1,4 @@
 {
-    "files.associations": {
-        "type_traits": "cpp"
-    },
     "cSpell.words": [
         "PSFUNC",
         "PSVAR",

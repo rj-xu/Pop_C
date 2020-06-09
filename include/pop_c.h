@@ -91,7 +91,7 @@
 
 // Private Member Function Definition
 #define _METHOD(Class, return_type, Func, type_args...) \
-    return_type##Class##_##Func(Class *_this, ##type_args)
+    return_type Class##_##Func(Class *_this, ##type_args)
 
 // Virtual Member Function Declaration in Base
 #define VBFUNC(Base, return_type, Func, type_args...) \
@@ -162,19 +162,19 @@
     Son *_this = SUB(Father, Son, _base)
 
 // This Pointer 2 Only in Virtual Member Function
-#define _THIS(GrandFather, Father, Son) \
+#define _THIS_2(GrandFather, Father, Son) \
     Son *_this = SUB_2(GrandFather, Father, Son, _base)
 
 // This Pointer 3 Only in Virtual Member Function
-#define _THIS(GrandGrandFather, GrandFather, Father, Son) \
+#define _THIS_3(GrandGrandFather, GrandFather, Father, Son) \
     Son *_this = SUB_3(GrandGrandFather, GrandFather, Father, Son, _base)
 
 // This Pointer Switch Only in Virtual Member Function
 #define _THIS_SW(DestFather, SrcFather, Son) \
-    Son *_this = SUPER(DestFather, SUB(SrcFather, Son, _base));
+    DestFather *_this = SWITCH(DestFather, SrcFather, Son, _base);
 
 // Do Member Function of the Instance and input the Instance
-#define DO(Func, c, args...) \
+#define DO(c, Func, args...) \
     c->Func(c, ##args)
 
 // Lambda
