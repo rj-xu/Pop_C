@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "type_traits": "cpp"
+    },
+    "cSpell.words": [
+        "PSFUNC",
+        "PSVAR",
+        "VBFUNC",
+        "VFUNC",
+        "VMETHOD"
+    ]
+}
