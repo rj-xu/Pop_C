@@ -6,7 +6,7 @@ Write C code like C++ OOP using Macro.
 
 | Keywords                                | Usages                                                   |
 | --------------------------------------- | -------------------------------------------------------- |
-| `INTERFACE`                             | Interface                                                |
+| `INTERFACE`                             | Public Interface                                         |
 | `ABSTRACT`                              | Abstract Class                                           |
 | `CLASS`                                 | Class                                                    |
 | `CLASS_CTOR, ABSTRACT_CTOR, SUPER_CTOR` | Constructor                                              |
@@ -35,13 +35,23 @@ C99, GCC 9.3.0+
 
 ## Todo
 
-- [ ] Enum class
-- [ ] Namespace
-- [ ] List initialize
-- [ ] Vector
-- [ ] Map
-- [ ] String
+- Enum Class
+- Namespace
+- List Initialize
 
 ## Issues
 
 - Can not override destructor
+
+## Design Patterns
+
+- [ ] Creational Design Patterns
+- [ ] Structural Design Patterns
+  - [x] Decorator
+- [ ] Behavioral Design Patterns
+
+## Containers
+
+- [ ] Vector
+- [ ] Map
+- [ ] String

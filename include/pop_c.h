@@ -109,7 +109,7 @@
 #define PSFUNC(Class, return_type, Func) \
     extern return_type Class##Func()
 
-// Inheritance
+// Public Inheritance
 #define INHERIT(Father) \
     struct Father Father
 
