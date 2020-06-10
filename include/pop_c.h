@@ -28,31 +28,27 @@
     typedef struct Class Class; \
     void _##Class##Ctor();      \
     void _##Class##Dtor();      \
-    int _New##Class();          \
-    int _Delete##Class();       \
+    void _New##Class();         \
+    void _Delete##Class();      \
     struct Class
 
 // Class Constructor
-#define CLASS_CTOR(Class, type_args...)          \
-    int _New##Class(Class **c_ptr)               \
-    {                                            \
+#define CLASS_CTOR(Class, type_args...) \
+    void _New##Class(Class **c_ptr)     \
+    {                                   \
         *c_ptr = malloc(sizeof(Class)); \
-        if (!*c_ptr)                             \
-            return 1;                            \
-        return 0;                                \
-    }                                            \
+        assert(*c_ptr);                 \
+    }                                   \
     void _##Class##Ctor(Class *_this, ##type_args)
 
 // Class Destructor
-#define CLASS_DTOR(Class)        \
-    int _Delete##Class(Class *c) \
-    {                            \
-        if (!c)                  \
-            return 1;            \
-        _##Class##Dtor(c);       \
-        free(c);                 \
-        return 0;                \
-    }                            \
+#define CLASS_DTOR(Class)         \
+    void _Delete##Class(Class *c) \
+    {                             \
+        assert(c);                \
+        _##Class##Dtor(c);        \
+        free(c);                  \
+    }                             \
     void _##Class##Dtor(Class *_this)
 
 // New
