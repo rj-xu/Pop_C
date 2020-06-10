@@ -36,7 +36,7 @@
 #define CLASS_CTOR(Class, type_args...)          \
     int _New##Class(Class **c_ptr)               \
     {                                            \
-        *c_ptr = (Class *)malloc(sizeof(Class)); \
+        *c_ptr = malloc(sizeof(Class)); \
         if (!*c_ptr)                             \
             return 1;                            \
         return 0;                                \
@@ -139,11 +139,11 @@
 
 // Sub 2
 #define SUB_2(GrandFather, Father, Son, c) \
-    SUB(GrandFather, Father, SUB(Father, Son, c))
+    SUB(Father, Son, SUB(GrandFather, Father, c))
 
 // Sub 3
 #define SUB_3(GrandGrandFather, GrandFather, Father, Son, c) \
-    SUB(GrandGrandFather, GrandFather, SUB(GrandFather, Father, SUB(Father, Son, c)))
+    SUB(Father, Son, SUB(GrandFather, Father, SUB(GrandGrandFather, GrandFather, c)))
 
 // Father Constructor Only in CLASS_CTOR Start
 #define SUPER_CTOR(Father, args...) \

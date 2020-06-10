@@ -100,7 +100,7 @@ CLASS_CTOR(ConcreteDecoratorA, Component *component)
 {
     SUPER_CTOR(Decorator, component);
     OVERRIDE(Decorator.Component, ConcreteDecoratorA, Operation);
-    _this->temp_str = malloc(sizeof(char) * 50);
+    _this->temp_str = malloc(sizeof(char) * 100);
 }
 
 CLASS_DTOR(ConcreteDecoratorA)
@@ -130,7 +130,7 @@ CLASS_CTOR(ConcreteDecoratorB, Component *component)
 {
     SUPER_CTOR(Decorator, component);
     OVERRIDE(Decorator.Component, ConcreteDecoratorB, Operation);
-    _this->temp_str = malloc(sizeof(char) * 50);
+    _this->temp_str = malloc(sizeof(char) * 100);
 }
 
 CLASS_DTOR(ConcreteDecoratorB)
