@@ -47,11 +47,13 @@ C99, GCC 9.3.0+
 
 - [ ] Creational Design Patterns
 - [ ] Structural Design Patterns
+  - [ ] Adapter
   - [x] Decorator
 - [ ] Behavioral Design Patterns
 
 ## Containers
 
-- [ ] Vector
-- [ ] Map
-- [ ] String
+- [ ] vector
+- [ ] map
+- [ ] string
+- [ ] set
