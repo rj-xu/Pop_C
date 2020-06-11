@@ -25,6 +25,7 @@ Write C code like C++ OOP using Macro.
 | `SWITCH, _THIS_SW`                      | Sub then Super                                           |
 | `_this, _base, _THIS, _THIS_2, _THIS_3` | This Pointer                                             |
 | `DO`                                    | Fast Do Member Function                                  |
+| `ENUM`                                  | Enum Class                                               |
 | `LAMBDA`                                | Lambda                                                   |
 | `Namespace`                             | Namespace                                                |
 | `_`                                     | Private                                                  |
@@ -35,7 +36,6 @@ C99, GCC 9.3.0+
 
 ## Todo
 
-- Enum Class
 - Namespace
 - List Initialize
 

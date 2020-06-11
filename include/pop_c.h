@@ -173,6 +173,20 @@
 #define DO(c, Func, args...) \
     c->Func(c, ##args)
 
+// Enum Class
+#define ENUM(Class) \
+    typedef struct  \
+    {               \
+        int raw;    \
+    } Class;        \
+    enum _##Class
+//  {
+//      _CLASS_ENUM_0,
+//      _CLASS_ENUM_1,
+//  };
+// #define CLASS_ENUM_0 ((Class){_CLASS_ENUM_0})
+// #define CLASS_ENUM_1 ((Class){_CLASS_ENUM_1})
+
 // Lambda
 #define LAMBDA(return_type, Function_body) \
     ({                                     \
