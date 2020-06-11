@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "../../../include/pop_c.h"
 
 /**
  * The Target defines the domain-specific interface used by the client code.
  */
-ABSTRACT(Target)
+CLASS(Target)
 {
     VBFUNC(Target, const char *, Request);
 };
@@ -15,12 +16,12 @@ METHOD(Target, const char *, Request)
     return "Target: The default target's behavior.";
 }
 
-ABSTRACT_CTOR(Target)
+CLASS_CTOR(Target)
 {
     BIND(Target, Request);
 }
 
-ABSTRACT_DTOR(Target)
+CLASS_DTOR(Target)
 {
 }
 
@@ -56,21 +57,32 @@ CLASS(Adapter)
 {
     INHERIT(Target);
     VFUNC(Target, const char *, Request);
-    _FUNC(Adapter, void, Reverse, char *s);
+    _FUNC(Adapter, void, Reverse, char *str);
     Adaptee *_adaptee;
+    char *_temp_str;
 };
+
+_METHOD(Adapter, void, Reverse, char *str)
+{
+    int len = strlen(str);
+    char c = 0;
+    for (int i = 0; i < len / 2; i++)
+    {
+        c = *(str + i);
+        *(str + i) = *(str + len - 1 - i);
+        *(str + len - 1 - i) = c;
+    }
+}
 
 VMETHOD(Target, Adapter, const char *, Request)
 {
     _THIS(Target, Adapter);
     char *to_reverse = malloc(sizeof(char) * 100);
-    strcpy(to_reverse, _this->_adaptee->SpecificRequest(_base));
-    std::reverse(to_reverse.begin(), to_reverse.end());
-    return "Adapter: (TRANSLATED) " + to_reverse;
-}
-
-_FUNC(dapter, void, Reverse, char *s)
-{
+    strcpy(to_reverse, DO(_this->_adaptee, SpecificRequest));
+    Adapter_Reverse(_this, to_reverse);
+    sprintf(_this->_temp_str, "Adapter: (TRANSLATED) %s", to_reverse);
+    free(to_reverse);
+    return _this->_temp_str;
 }
 
 CLASS_CTOR(Adapter, Adaptee *adaptee)
@@ -78,39 +90,42 @@ CLASS_CTOR(Adapter, Adaptee *adaptee)
     SUPER_CTOR(Target);
     OVERRIDE(Target, Adapter, Request);
     _this->_adaptee = adaptee;
+    _this->_temp_str = malloc(sizeof(char) * 100);
 }
 
 CLASS_DTOR(Adapter)
 {
+    free(_this->_temp_str);
     SUPER_DTOR(Target);
 }
 
 /**
  * The client code supports all classes that follow the Target interface.
  */
-void ClientCode(const Target *target)
+void ClientCode(Target *target)
 {
-    std::cout << target->Request();
+    printf("%s", DO(target, Request));
 }
 
 int main()
 {
-    std::cout << "Client: I can work just fine with the Target objects:\n";
-    Target *target = new Target;
+    printf("Client: I can work just fine with the Target objects:\n");
+    NEW(Target, target);
     ClientCode(target);
-    std::cout << "\n\n";
-    Adaptee *adaptee = new Adaptee;
-    std::cout << "Client: The Adaptee class has a weird interface. See, I don't understand it:\n";
-    std::cout << "Adaptee: " << adaptee->SpecificRequest();
-    std::cout << "\n\n";
-    std::cout << "Client: But I can work with it via the Adapter:\n";
-    Adapter *adapter = new Adapter(adaptee);
-    ClientCode(adapter);
-    std::cout << "\n";
+    printf("\n\n");
 
-    delete target;
-    delete adaptee;
-    delete adapter;
+    printf("Client: The Adaptee class has a weird interface. See, I don't understand it:\n");
+    NEW(Adaptee, adaptee);
+    printf("Adaptee: %s\n\n", DO(adaptee, SpecificRequest));
+
+    printf("Client: But I can work with it via the Adapter:\n");
+    NEW(Adapter, adapter, adaptee);
+    ClientCode(SUPER(Target, adapter));
+    printf("\n");
+
+    DELETE(Adapter, adapter);
+    DELETE(Adaptee, adaptee);
+    DELETE(Target, target);
 
     return 0;
 }

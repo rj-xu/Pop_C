@@ -3,8 +3,6 @@
 
 #include "../../../include/pop_c.h"
 
-// Component
-
 /**
  * The base Component interface defines operations that can be altered by
  * decorators.
@@ -13,8 +11,6 @@ INTERFACE(Component)
 {
     VBFUNC(Component, const char *, Operation);
 };
-
-// ConcreteComponent
 
 /**
  * Concrete Components provide default implementations of the operations. There
@@ -39,8 +35,6 @@ CLASS_CTOR(ConcreteComponent)
 CLASS_DTOR(ConcreteComponent)
 {
 }
-
-// Decorator
 
 /**
  * The base Decorator class follows the same interface as the other components.
@@ -73,8 +67,6 @@ ABSTRACT_CTOR(Decorator, Component *component)
 ABSTRACT_DTOR(Decorator)
 {
 }
-
-// ConcreteDecorator
 
 /**
  * Concrete Decorators call the wrapped object and alter its result in some way.
@@ -139,8 +131,6 @@ CLASS_DTOR(ConcreteDecoratorB)
     SUPER_DTOR(Decorator);
 }
 
-// Client
-
 /**
  * The client code works with all objects using the Component interface. This
  * way it can stay independent of the concrete classes of components it works
@@ -153,18 +143,16 @@ void ClientCode(Component *component)
 
 int main()
 {
-    ConcreteComponent *concrete_component = NEW(ConcreteComponent, concrete_component);
+    NEW(ConcreteComponent, concrete_component);
     Component *simple1 = SUPER(Component, concrete_component);
 
     printf("Client: I've got a simple component:\n");
     ClientCode(simple1);
     printf("\n\n");
 
-    ConcreteDecoratorA *decorator1 =
-        NEW(ConcreteDecoratorA, decorator1, simple1);
+    NEW(ConcreteDecoratorA, decorator1, simple1);
     Component *temp = SUPER_2(Component, Decorator, decorator1);
-    ConcreteDecoratorB *decorator2 =
-        NEW(ConcreteDecoratorB, decorator2, temp);
+    NEW(ConcreteDecoratorB, decorator2, temp);
     Component *simple2 = SUPER_2(Component, Decorator, decorator2);
 
     printf("Client: Now I've got a decorated component:\n");

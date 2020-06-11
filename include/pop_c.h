@@ -53,7 +53,13 @@
     void _##Class##Dtor(Class *const _this)
 
 // New
-#define NEW(Class, c, args...)         \
+#define NEW(Class, c, args...) \
+    Class *c = NULL;           \
+    _New##Class(&c);           \
+    _##Class##Ctor(c, ##args)
+
+// New Pointer
+#define NEW_PTR(Class, c, args...)     \
     ({                                 \
         {                              \
             _New##Class(&c);           \
@@ -154,6 +160,10 @@
 #define SWITCH(DestFather, SrcFather, Son, c) \
     SUPER(DestFather, SUB(SrcFather, Son, c));
 
+// Do Member Function of the Instance and input the Instance
+#define DO(c, Func, args...) \
+    c->Func(c, ##args)
+
 // This Pointer Only in Virtual Member Function
 #define _THIS(Father, Son) \
     Son *const _this = SUB(Father, Son, _base)
@@ -170,9 +180,17 @@
 #define _THIS_SW(DestFather, SrcFather, Son) \
     DestFather *const _this = SWITCH(DestFather, SrcFather, Son, _base);
 
-// Do Member Function of the Instance and input the Instance
-#define DO(c, Func, args...) \
-    c->Func(c, ##args)
+// Super This Pointer
+#define _BASE(Father, c, args...) \
+    Father *const args##_base = SUPER(Father, c);
+
+// Super 2 This Pointer
+#define _BASE_2(GrandFather, Father, c, args...) \
+    Father *const args##_base_2 = SUPER_2(GrandFather, Father, c);
+
+// Super 3 This Pointer
+#define _BASE_3(GrandGrandFather, GrandFather, Father, c, args...) \
+    Father *const args##_base_3 = SUPER_3(GrandGrandFather, GrandFather, Father, c);
 
 // Enum Class
 #define ENUM(Class) \

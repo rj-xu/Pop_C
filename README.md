@@ -22,13 +22,16 @@ Write C code like C++ OOP using Macro.
 | `OVERRIDE`                              | Override                                                 |
 | `SUPER, SUPER_2, SUPER_3`               | Super                                                    |
 | `Sub, Sub_2, SUb_3`                     | Sub                                                      |
-| `SWITCH, _THIS_SW`                      | Sub then Super                                           |
-| `_this, _base, _THIS, _THIS_2, _THIS_3` | This Pointer                                             |
-| `DO`                                    | Fast Do Member Function                                  |
+| `SWITCH`                                | Sub then Super                                           |
+| `_THIS, _THIS_2, _THIS_3`               | Use This Pointer in Virtual Function                     |
+| `_THIS_SW`                              | Sub then Super This Pointer in Virtual Function          |
+| `_BASE, _BASE_2, _BASE_3`               | Super This Pointer                                       |
+| `DO`                                    | Do Member Function and Pass the Pointer                  |
 | `ENUM`                                  | Enum Class                                               |
 | `LAMBDA`                                | Lambda                                                   |
 | `Namespace`                             | Namespace                                                |
 | `_`                                     | Private                                                  |
+| `_this, _base, _base_2, _base_3`        | This Pointer                                             |
 
 ## C Version
 
@@ -47,7 +50,7 @@ C99, GCC 9.3.0+
 
 - [ ] Creational Design Patterns
 - [ ] Structural Design Patterns
-  - [ ] Adapter
+  - [x] Adapter
   - [x] Decorator
 - [ ] Behavioral Design Patterns
 

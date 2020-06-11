@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 {
     printf("Hello world!\n");
 
-    Mouse *jerry = NEW(Mouse, jerry, "Jerry");
+    NEW(Mouse, jerry, "Jerry");
 
     ISay *say = SUPER(ISay, jerry);
     DO(say, SayName);
