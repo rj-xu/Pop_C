@@ -1,5 +1,6 @@
 #pragma once
 
+#include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -17,11 +18,11 @@
 
 // Abstract Constructor
 #define ABSTRACT_CTOR(Class, type_args...) \
-    void _##Class##Ctor(Class *_this, ##type_args)
+    void _##Class##Ctor(Class *const _this, ##type_args)
 
 // Abstract Destructor
 #define ABSTRACT_DTOR(Class) \
-    void _##Class##Dtor(Class *_this)
+    void _##Class##Dtor(Class *const _this)
 
 // Class
 #define CLASS(Class)            \
@@ -33,23 +34,23 @@
     struct Class
 
 // Class Constructor
-#define CLASS_CTOR(Class, type_args...) \
-    void _New##Class(Class **c_ptr)     \
-    {                                   \
-        *c_ptr = malloc(sizeof(Class)); \
-        assert(*c_ptr);                 \
-    }                                   \
-    void _##Class##Ctor(Class *_this, ##type_args)
+#define CLASS_CTOR(Class, type_args...)   \
+    void _New##Class(Class **const c_ptr) \
+    {                                     \
+        *c_ptr = malloc(sizeof(Class));   \
+        assert(*c_ptr);                   \
+    }                                     \
+    void _##Class##Ctor(Class *const _this, ##type_args)
 
 // Class Destructor
-#define CLASS_DTOR(Class)         \
-    void _Delete##Class(Class *c) \
-    {                             \
-        assert(c);                \
-        _##Class##Dtor(c);        \
-        free(c);                  \
-    }                             \
-    void _##Class##Dtor(Class *_this)
+#define CLASS_DTOR(Class)               \
+    void _Delete##Class(Class *const c) \
+    {                                   \
+        assert(c);                      \
+        _##Class##Dtor(c);              \
+        free(c);                        \
+    }                                   \
+    void _##Class##Dtor(Class *const _this)
 
 // New
 #define NEW(Class, c, args...)         \
@@ -75,23 +76,23 @@
 
 // Public Member Function Declaration
 #define FUNC(Class, return_type, Func, type_args...) \
-    return_type (*Func)(Class * _this, ##type_args)
+    return_type (*Func)(Class *const _this, ##type_args)
 
 // Public Member Function Definition
 #define METHOD(Class, return_type, Func, type_args...) \
-    return_type Class##Func(Class *_this, ##type_args)
+    return_type Class##Func(Class *const _this, ##type_args)
 
 // Private Member Function Declaration
 #define _FUNC(Class, return_type, Func, type_args...) \
-    return_type (*_##Func)(Class * _this, ##type_args)
+    return_type (*_##Func)(Class *const _this, ##type_args)
 
 // Private Member Function Definition
 #define _METHOD(Class, return_type, Func, type_args...) \
-    return_type Class##_##Func(Class *_this, ##type_args)
+    return_type Class##_##Func(Class *const _this, ##type_args)
 
 // Virtual Member Function Declaration in Base
 #define VBFUNC(Base, return_type, Func, type_args...) \
-    return_type (*Func)(Base * _base, ##type_args)
+    return_type (*Func)(Base *const _base, ##type_args)
 
 // Virtual Member Function Declaration in Class
 #define VFUNC(Base, return_type, Func, type_args...) \
@@ -99,7 +100,7 @@
 
 // Virtual Member Function Definition
 #define VMETHOD(Base, Class, return_type, Func, type_args...) \
-    return_type Class##V##Func(Base *_base, ##type_args)
+    return_type Class##V##Func(Base *const _base, ##type_args)
 
 // Public Static Member Function Declaration
 #define PSFUNC(Class, return_type, Func) \
@@ -155,19 +156,19 @@
 
 // This Pointer Only in Virtual Member Function
 #define _THIS(Father, Son) \
-    Son *_this = SUB(Father, Son, _base)
+    Son *const _this = SUB(Father, Son, _base)
 
 // This Pointer 2 Only in Virtual Member Function
 #define _THIS_2(GrandFather, Father, Son) \
-    Son *_this = SUB_2(GrandFather, Father, Son, _base)
+    Son *const _this = SUB_2(GrandFather, Father, Son, _base)
 
 // This Pointer 3 Only in Virtual Member Function
 #define _THIS_3(GrandGrandFather, GrandFather, Father, Son) \
-    Son *_this = SUB_3(GrandGrandFather, GrandFather, Father, Son, _base)
+    Son *const _this = SUB_3(GrandGrandFather, GrandFather, Father, Son, _base)
 
 // This Pointer Switch Only in Virtual Member Function
 #define _THIS_SW(DestFather, SrcFather, Son) \
-    DestFather *_this = SWITCH(DestFather, SrcFather, Son, _base);
+    DestFather *const _this = SWITCH(DestFather, SrcFather, Son, _base);
 
 // Do Member Function of the Instance and input the Instance
 #define DO(c, Func, args...) \
