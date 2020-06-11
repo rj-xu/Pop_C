@@ -182,15 +182,15 @@
 
 // Super This Pointer
 #define _BASE(Father, c, args...) \
-    Father *const args##_base = SUPER(Father, c);
+    Father *const ##args##_base = SUPER(Father, c);
 
 // Super 2 This Pointer
 #define _BASE_2(GrandFather, Father, c, args...) \
-    Father *const args##_base_2 = SUPER_2(GrandFather, Father, c);
+    Father *const ##args##_base_2 = SUPER_2(GrandFather, Father, c);
 
 // Super 3 This Pointer
 #define _BASE_3(GrandGrandFather, GrandFather, Father, c, args...) \
-    Father *const args##_base_3 = SUPER_3(GrandGrandFather, GrandFather, Father, c);
+    Father *const ##args##_base_3 = SUPER_3(GrandGrandFather, GrandFather, Father, c);
 
 // Enum Class
 #define ENUM(Class) \
