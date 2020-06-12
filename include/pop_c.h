@@ -74,15 +74,15 @@
 
 //  Class Public Static Member Variable Declaration
 #define PSVAR(Class, type, arg) \
-    extern type Class_arg
+    extern type Class##_arg
 
 // Class Public Static Member Variable Definition
-#define MEMBER(Class, type, arg) \
-    type Class_arg
+#define MEMBER(Class, type, arg, default_value) \
+    type Class##_##arg = default_value
 
 // Public Member Function Declaration
 #define FUNC(Class, return_type, Func, type_args...) \
-    return_type (*Func)(Class *const _this, ##type_args)
+    ; // return_type (*Func)(Class *const _this, ##type_args)
 
 // Public Member Function Definition
 #define METHOD(Class, return_type, Func, type_args...) \
@@ -90,11 +90,11 @@
 
 // Private Member Function Declaration
 #define _FUNC(Class, return_type, Func, type_args...) \
-    return_type (*_##Func)(Class *const _this, ##type_args)
+    ; // return_type (*_##Func)(Class *const _this, ##type_args)
 
 // Private Member Function Definition
 #define _METHOD(Class, return_type, Func, type_args...) \
-    return_type Class##_##Func(Class *const _this, ##type_args)
+    static return_type _##Class##Func(Class *const _this, ##type_args)
 
 // Virtual Member Function Declaration in Base
 #define VBFUNC(Base, return_type, Func, type_args...) \
@@ -102,11 +102,11 @@
 
 // Virtual Member Function Declaration in Class
 #define VFUNC(Base, return_type, Func, type_args...) \
-    ;
+    ; // return_type Class##func(Base *const _base, ##type_args)
 
 // Virtual Member Function Definition
 #define VMETHOD(Base, Class, return_type, Func, type_args...) \
-    return_type Class##V##Func(Base *const _base, ##type_args)
+    static return_type _V##Class##Func(Base *const _base, ##type_args)
 
 // Public Static Member Function Declaration
 #define PSFUNC(Class, return_type, Func) \
@@ -122,7 +122,7 @@
 
 // Override
 #define OVERRIDE(inheritance, Class, Func) \
-    _this->inheritance.Func = Class##V##Func
+    _this->inheritance.Func = _V##Class##Func
 
 // Super
 #define SUPER(Father, c) \
@@ -182,15 +182,15 @@
 
 // Super This Pointer
 #define _BASE(Father, c, args...) \
-    Father *const ##args##_base = SUPER(Father, c);
+    Father *const args##_base = SUPER(Father, c);
 
 // Super 2 This Pointer
 #define _BASE_2(GrandFather, Father, c, args...) \
-    Father *const ##args##_base_2 = SUPER_2(GrandFather, Father, c);
+    Father *const args##_base_2 = SUPER_2(GrandFather, Father, c);
 
 // Super 3 This Pointer
 #define _BASE_3(GrandGrandFather, GrandFather, Father, c, args...) \
-    Father *const ##args##_base_3 = SUPER_3(GrandGrandFather, GrandFather, Father, c);
+    Father *const args##_base_3 = SUPER_3(GrandGrandFather, GrandFather, Father, c);
 
 // Enum Class
 #define ENUM(Class) \
