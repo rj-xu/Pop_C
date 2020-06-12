@@ -10,10 +10,10 @@
     struct Class
 
 // Abstract Class
-#define ABSTRACT(Class)         \
-    typedef struct Class Class; \
-    void _##Class##Ctor();      \
-    void _##Class##Dtor();      \
+#define ABSTRACT(Class, type_args...)                     \
+    typedef struct Class Class;                           \
+    void _##Class##Ctor(Class *const _this, ##type_args); \
+    void _##Class##Dtor(Class *const _this);              \
     struct Class
 
 // Abstract Constructor
@@ -25,12 +25,12 @@
     void _##Class##Dtor(Class *const _this)
 
 // Class
-#define CLASS(Class)            \
-    typedef struct Class Class; \
-    void _##Class##Ctor();      \
-    void _##Class##Dtor();      \
-    void _New##Class();         \
-    void _Delete##Class();      \
+#define CLASS(Class, type_args...)                        \
+    typedef struct Class Class;                           \
+    void _##Class##Ctor(Class *const _this, ##type_args); \
+    void _##Class##Dtor(Class *const _this);              \
+    void _New##Class(Class **const c_ptr);                \
+    void _Delete##Class(Class *const c);                  \
     struct Class
 
 // Class Constructor
@@ -72,17 +72,17 @@
 #define DELETE(Class, c) \
     (_Delete##Class(c))
 
-//  Class Public Static Member Variable Declaration
-#define PSVAR(Class, type, arg) \
+// Static Member Variable Declaration
+#define SVAR(Class, type, arg) \
     extern type Class##_arg
 
-// Class Public Static Member Variable Definition
-#define MEMBER(Class, type, arg, default_value) \
+// Static Member Variable Definition
+#define SMEMBER(Class, type, arg, default_value) \
     type Class##_##arg = default_value
 
 // Public Member Function Declaration
 #define FUNC(Class, return_type, Func, type_args...) \
-    ; // return_type (*Func)(Class *const _this, ##type_args)
+    extern return_type Class##Func(Class *const _this, ##type_args)
 
 // Public Member Function Definition
 #define METHOD(Class, return_type, Func, type_args...) \
@@ -90,11 +90,19 @@
 
 // Private Member Function Declaration
 #define _FUNC(Class, return_type, Func, type_args...) \
-    ; // return_type (*_##Func)(Class *const _this, ##type_args)
+    ; // return_type _##Class##Func(Class *const _this, ##type_args)
 
 // Private Member Function Definition
 #define _METHOD(Class, return_type, Func, type_args...) \
     static return_type _##Class##Func(Class *const _this, ##type_args)
+
+// Static Member Function Declaration
+#define SFUNC(Class, return_type, Func, type_args...) \
+    extern return_type Class##Func(##type_args)
+
+// Static Member Function Definition
+#define SMETHOD(Class, return_type, Func, type_args...) \
+    static return_type _##Class##Func(##type_args)
 
 // Virtual Member Function Declaration in Base
 #define VBFUNC(Base, return_type, Func, type_args...) \
@@ -107,10 +115,6 @@
 // Virtual Member Function Definition
 #define VMETHOD(Base, Class, return_type, Func, type_args...) \
     static return_type _V##Class##Func(Base *const _base, ##type_args)
-
-// Public Static Member Function Declaration
-#define PSFUNC(Class, return_type, Func) \
-    extern return_type Class##Func()
 
 // Public Inheritance
 #define INHERIT(Father) \

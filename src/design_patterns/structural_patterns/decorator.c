@@ -43,7 +43,7 @@ CLASS_DTOR(ConcreteComponent)
  * include a field for storing a wrapped component and the means to initialize
  * it.
  */
-ABSTRACT(Decorator)
+ABSTRACT(Decorator, Component *component)
 {
     INHERIT(Component);
     VFUNC(Component, const char *, Operation);
@@ -71,7 +71,7 @@ ABSTRACT_DTOR(Decorator)
 /**
  * Concrete Decorators call the wrapped object and alter its result in some way.
  */
-CLASS(ConcreteDecoratorA)
+CLASS(ConcreteDecoratorA, Component *component)
 {
     INHERIT(Decorator);
     VFUNC(Component, const char *, Operation);
@@ -82,7 +82,7 @@ VMETHOD(Component, ConcreteDecoratorA, const char *, Operation)
 {
     _THIS_2(Component, Decorator, ConcreteDecoratorA);
     strcpy(_this->temp_str, "ConcreteDecoratorA(");
-    strcat(_this->temp_str, DecoratorVOperation(_base));
+    strcat(_this->temp_str, _VDecoratorOperation(_base));
     strcat(_this->temp_str, ")");
 
     return _this->temp_str;
@@ -101,7 +101,7 @@ CLASS_DTOR(ConcreteDecoratorA)
     SUPER_DTOR(Decorator);
 }
 
-CLASS(ConcreteDecoratorB)
+CLASS(ConcreteDecoratorB, Component *component)
 {
     INHERIT(Decorator);
     VFUNC(Component, const char *, Operation);
@@ -112,7 +112,7 @@ VMETHOD(Component, ConcreteDecoratorB, const char *, Operation)
 {
     _THIS_2(Component, Decorator, ConcreteDecoratorB);
     strcpy(_this->temp_str, "ConcreteDecoratorB(");
-    strcat(_this->temp_str, DecoratorVOperation(_base));
+    strcat(_this->temp_str, _VDecoratorOperation(_base));
     strcat(_this->temp_str, ")");
 
     return _this->temp_str;

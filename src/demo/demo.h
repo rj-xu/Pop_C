@@ -6,13 +6,13 @@ INTERFACE(ISay)
     VBFUNC(ISay, void, SayHello);
 };
 
-ABSTRACT(Animal)
+ABSTRACT(Animal, const char *name)
 {
-    _FUNC(Animal, void, SetName, const char *name);
     char _name[30];
 };
+_FUNC(Animal, void, SetName, const char *name);
 
-CLASS(Mouse)
+CLASS(Mouse, const char *name)
 {
     INHERIT(Animal);
     INHERIT(ISay);

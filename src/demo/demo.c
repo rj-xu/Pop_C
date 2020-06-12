@@ -13,8 +13,7 @@ _METHOD(Animal, void, SetName, const char *name)
 
 ABSTRACT_CTOR(Animal, const char *name)
 {
-    BIND(Animal, _SetName);
-    DO(_this, _SetName, name);
+    _AnimalSetName(_this, name);
 }
 
 ABSTRACT_DTOR(Animal)

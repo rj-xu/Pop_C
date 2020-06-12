@@ -30,10 +30,8 @@ CLASS_DTOR(Target)
  * with the existing client code. The Adaptee needs some adaptation before the
  * client code can use it.
  */
-CLASS(Adaptee)
-{
-    FUNC(Adaptee, const char *, SpecificRequest);
-};
+CLASS(Adaptee){};
+FUNC(Adaptee, const char *, SpecificRequest);
 
 METHOD(Adaptee, const char *, SpecificRequest)
 {
@@ -42,7 +40,6 @@ METHOD(Adaptee, const char *, SpecificRequest)
 
 CLASS_CTOR(Adaptee)
 {
-    BIND(Adaptee, SpecificRequest);
 }
 
 CLASS_DTOR(Adaptee)
@@ -53,14 +50,14 @@ CLASS_DTOR(Adaptee)
  * The Adapter makes the Adaptee's interface compatible with the Target's
  * interface.
  */
-CLASS(Adapter)
+CLASS(Adapter, Adaptee *adaptee)
 {
     INHERIT(Target);
     VFUNC(Target, const char *, Request);
-    _FUNC(Adapter, void, Reverse, char *str);
     Adaptee *_adaptee;
     char *_temp_str;
 };
+_FUNC(Adapter, void, Reverse, char *str);
 
 _METHOD(Adapter, void, Reverse, char *str)
 {
@@ -78,8 +75,8 @@ VMETHOD(Target, Adapter, const char *, Request)
 {
     _THIS(Target, Adapter);
     char *to_reverse = malloc(sizeof(char) * 100);
-    strcpy(to_reverse, DO(_this->_adaptee, SpecificRequest));
-    Adapter_Reverse(_this, to_reverse);
+    strcpy(to_reverse, AdapteeSpecificRequest(_this->_adaptee));
+    _AdapterReverse(_this, to_reverse);
     sprintf(_this->_temp_str, "Adapter: (TRANSLATED) %s", to_reverse);
     free(to_reverse);
     return _this->_temp_str;
@@ -116,7 +113,7 @@ int main()
 
     printf("Client: The Adaptee class has a weird interface. See, I don't understand it:\n");
     NEW(Adaptee, adaptee);
-    printf("Adaptee: %s\n\n", DO(adaptee, SpecificRequest));
+    printf("Adaptee: %s\n\n", AdapteeSpecificRequest(adaptee));
 
     printf("Client: But I can work with it via the Adapter:\n");
     NEW(Adapter, adapter, adaptee);
