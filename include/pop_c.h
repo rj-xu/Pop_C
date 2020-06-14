@@ -78,7 +78,7 @@
 
 // Static Member Variable Definition
 #define SMEMBER(Class, type, arg, default_value) \
-    type Class##_##arg = default_value
+    type Class##_##arg = default_value;
 
 // Public Member Function Declaration
 #define FUNC(Class, return_type, Func, type_args...) \
@@ -102,7 +102,7 @@
 
 // Static Member Function Definition
 #define SMETHOD(Class, return_type, Func, type_args...) \
-    static return_type _##Class##Func(##type_args)
+    return_type Class##Func(##type_args)
 
 // Virtual Member Function Declaration in Base
 #define VBFUNC(Base, return_type, Func, type_args...) \
@@ -110,7 +110,7 @@
 
 // Virtual Member Function Declaration in Class
 #define VFUNC(Base, return_type, Func, type_args...) \
-    ; // return_type Class##func(Base *const _base, ##type_args)
+    ; // return_type Class##Func(Base *const _base, ##type_args)
 
 // Virtual Member Function Definition
 #define VMETHOD(Base, Class, return_type, Func, type_args...) \
