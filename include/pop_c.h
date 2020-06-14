@@ -74,15 +74,15 @@
 
 // Static Member Variable Declaration
 #define SVAR(Class, type, arg) \
-    extern type Class##_arg
+    ; // extern type Class##_arg
 
 // Static Member Variable Definition
 #define SMEMBER(Class, type, arg, default_value) \
-    type Class##_##arg = default_value;
+    static type Class##_##arg = default_value;
 
 // Public Member Function Declaration
 #define FUNC(Class, return_type, Func, type_args...) \
-    extern return_type Class##Func(Class *const _this, ##type_args)
+    return_type Class##Func(Class *const _this, ##type_args)
 
 // Public Member Function Definition
 #define METHOD(Class, return_type, Func, type_args...) \

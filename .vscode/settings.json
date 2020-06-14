@@ -15,5 +15,8 @@
         "VMETHOD",
         "laicep",
         "roivaheb"
-    ]
+    ],
+    "files.associations": {
+        "type_traits": "cpp"
+    }
 }
