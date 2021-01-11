@@ -1,8 +1,6 @@
 #pragma once
 
-#include <assert.h>
-#include <stddef.h>
-#include <stdlib.h>
+#include "stdc.h"
 
 // Interface
 #define INTERFACE(Class)        \
@@ -195,24 +193,3 @@
 // Super 3 This Pointer
 #define _BASE_3(GrandGrandFather, GrandFather, Father, c, args...) \
     Father *const args##_base_3 = SUPER_3(GrandGrandFather, GrandFather, Father, c);
-
-// Enum Class
-#define ENUM(Class) \
-    typedef struct  \
-    {               \
-        int raw;    \
-    } Class;        \
-    enum _##Class
-//  {
-//      _CLASS_ENUM_0,
-//      _CLASS_ENUM_1,
-//  };
-// #define CLASS_ENUM_0 ((Class){_CLASS_ENUM_0})
-// #define CLASS_ENUM_1 ((Class){_CLASS_ENUM_1})
-
-// Lambda
-#define LAMBDA(return_type, Function_body) \
-    ({                                     \
-        return_type __fn__ Function_body   \
-            __fn__;                        \
-    })

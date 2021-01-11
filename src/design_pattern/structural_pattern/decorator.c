@@ -1,7 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-
-#include "../../../include/pop_c.h"
+#include "oop.h"
 
 /**
  * The base Component interface defines operations that can be altered by

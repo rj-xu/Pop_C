@@ -9,14 +9,12 @@
         "SFUNC",
         "SMEMBER",
         "SMETHOD",
+        "STRINGIZE",
         "SVAR",
         "VBFUNC",
         "VFUNC",
         "VMETHOD",
         "laicep",
         "roivaheb"
-    ],
-    "files.associations": {
-        "type_traits": "cpp"
-    }
+    ]
 }

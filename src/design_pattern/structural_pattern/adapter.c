@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-
-#include "../../../include/pop_c.h"
+#include "oop.h"
 
 /**
  * The Target defines the domain-specific interface used by the client code.
