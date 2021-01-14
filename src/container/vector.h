@@ -54,6 +54,7 @@ inline void VecMyFree(VecMy_t *vecPtr)
     vec->data = NULL;
     vec->size = 0;
     vec->_cap = 0;
+
     free(*vecPtr);
     vecPtr = NULL;
 }
@@ -69,25 +70,72 @@ inline int VecMyReserve(VecMy_t vec, size_t cap)
 {
     if (cap > vec->_cap)
     {
-        vec->data = (My_t *)realloc(vec->data, cap * sizeof(My_t));
-        if (vec->data == NULL)
+        My_t * data = (My_t *)realloc(vec->data, cap * sizeof(My_t));
+        if (data == NULL)
             return -1;
+        vec->data = data;
         vec->_cap = cap;
     }
     return 0;
 }
 inline int VecMyResize(VecMy_t vec, size_t size)
 {
+    if(VecMyReserve(vec, size) != 0) return -1;
     if (size > vec->size)
-    {
-    }
+        memset(vec->data + size , 0, (vec->size - size) * sizeof(My_t));
+    vec->size = size;
+    return 0;
 }
-inline int VecMyClear(VecMy_t vec);
+inline void VecMyClear(VecMy_t vec)
+{
+    memset(vec->data, 0 , vec->_cap * sizeof(My_t));
+    vec->size = 0;
+}
 /* Modifier */
-inline int VecMyPush(VecMy_t vec, My_t elem);
-inline int VecMyPop(VecMy_t vec);
-inline int VecMyInsert(VecMy_t vec, size_t i, My_t elem);
+inline int VecMyPush(VecMy_t vec, My_t elem)
+{
+    if(vec->size + 1 > vec->_cap && VecMyReserve(vec, VEC_GROW_CAP) != 0)
+        return -1;
+    vec->data[vec-size] = elem;
+    vec->size++;
+    return 0;
+}
+inline void VecMyPop(VecMy_t vec)
+{
+    if(vec->size > 0) vec->size--;
+}
+inline int VecMyInsert(VecMy_t vec, size_t i, My_t elem)
+{
+    if(i > vec->size) return -1;
+    if(vec->size + 1 > vec->_cap && VecMyReserve(vec, VEC_GROW_CAP) != 0)
+        return -1;
+    memmove(vec->data + i + 1, vec->data + i, (vec->size - i) * sizeof(My_t));
+    vec->data[i] = elem;
+    vec->size++;
+    return 0;
+}
 /* Convenience Method */
 inline size_t VecMyFind(VecMy_t vec, My_t elem);
-inline int VecMyFill(VecMy_t vec, size_t start, size_t count, My_t elem);
-inline int VecMyInsertElems(VecMy_t vec, size_t i, size_t elemNum, ...);
+inline int VecMyFill(VecMy_t vec, size_t start, size_t count, My_t elem)
+{
+    int cap = vec->size + count - start;
+    if( cap > vec-_cap && VecMyResize(vec, cap) != 0) return -1;
+    for(size_t i = 0; i < count; i++)
+        memcpy(vec->size + start + i, &elem, sizeof(My_t));
+    return 0;
+}
+inline int VecMyInsertElems(VecMy_t vec, size_t i, size_t elemNum, ...)
+{
+    if(i > vec->size) return -1;
+    if(vec->size + elemNum > vec->_cap && VecMyReserve(vec, vec->size + elemNum) != 0)
+        return -1;
+    memmove(vec->data + i + elemNum, vec->data + i, (vec->size - i) * sizeof(My_t));
+    va_list elemList;
+    va_start(elemList);
+    for(size_t i = 0; i < elemNum; i++)
+        vec->data[i] = (My_t)va_arg(elemList, My_t);
+    va_end(elemList);
+    vec->size += elemList;
+    return 0;
+}
+
