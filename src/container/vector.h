@@ -12,24 +12,24 @@
 #define VEC_GROW_CAP (vec->_cap > 0 ? vec->_cap * 2 : 1)
 
 // Constructor for vector in stack
-#define VEC(VecType_t, cap)                                                                     \
-    ({                                                                                          \
-        VecType_t _vec = NULL;                                                                  \
-        size_t _cap = (size_t)cap;                                                              \
-        size_t _byte_size = sizeof(*_vec) + _cap * sizeof(_vec->data[0]);                       \
-        _vec = (_cap == 0 || _byte_size > VEC_MAX_SIZE) ? NULL : (VecType_t)alloca(_byte_size); \
-        if (_vec != NULL)                                                                       \
-        {                                                                                       \
-            _vec->size = 0;                                                                     \
-            _vec->_cap = cap;                                                                   \
-            _vec->_in_stack = true;                                                             \
-            _vec->data = (typeof(_vec->data))((char *)_vec + sizeof(*_vec));                    \
-            memset(_vec->data, 0, _cap * sizeof(_vec - data[0]));                               \
-        }                                                                                       \
-        _vec;                                                                                   \
+#define VEC(VecType_t, cap)                                                                      \
+    ({                                                                                           \
+        VecType_t _vec = NULL;                                                                   \
+        size_t _cap = (size_t)cap;                                                               \
+        size_t _byte_size = sizeof(*_vec) + _cap * sizeof(_vec->data[0]);                        \
+        _vec = (_cap == 0 || _byte_size > VEC_STACK_MAX) ? NULL : (VecType_t)alloca(_byte_size); \
+        if (_vec != NULL)                                                                        \
+        {                                                                                        \
+            _vec->size = 0;                                                                      \
+            _vec->_cap = cap;                                                                    \
+            _vec->_in_stack = true;                                                              \
+            _vec->data = (typeof(_vec->data))((char *)_vec + sizeof(*_vec));                     \
+            memset(_vec->data, 0, _cap * sizeof(_vec->data[0]));                                 \
+        }                                                                                        \
+        _vec;                                                                                    \
     })
 
-//
+// Typedef a vector
 #define VEC_TYPEDEF(Name, type) _VEC_TYPEDEF(Name, type, type)
 #define _VEC_TYPEDEF(Name, type, up_type)                                                                  \
     /* Vector */                                                                                           \
