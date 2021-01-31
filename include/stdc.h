@@ -1,3 +1,5 @@
+#pragma once
+
 #include <assert.h>      //	Conditionally compiled macro that compares its argument to zero
 #include <complex.h>     // (C99)	Complex number arithmetic
 #include <ctype.h>       //	Functions to determine the type contained in character data
@@ -27,3 +29,5 @@
 // #include <uchar.h>       // (C11)	UTF-16 and UTF-32 character utilities
 #include <wchar.h>       // (C95)	Extended multibyte and wide character utilities
 #include <wctype.h>      // (C95)	Functions to determine the type contained in wide character data
+
+typedef unsigned int uint;
