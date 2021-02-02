@@ -80,11 +80,15 @@
     /********** ELEMENT ACCESS **********/                                                                 \
                                                                                                            \
     /* Access specified element with bounds checking */                                                    \
-    static inline type Vec##Name##At(Vec##Name##_t vec, size_t i) { return vec->data[i]; }                 \
+    static inline type Vec##Name##At(Vec##Name##_t vec, size_t i)                                          \
+    {                                                                                                      \
+        assert(i < vec->size);                                                                             \
+        return vec->data[i];                                                                               \
+    }                                                                                                      \
     /* Access the first element */                                                                         \
-    static inline type Vec##Name##Front(Vec##Name##_t vec) { return vec->data[0]; }                        \
+    static inline type Vec##Name##Front(Vec##Name##_t vec) { return Vec##Name##At(vec, 0); }               \
     /* Access the last element */                                                                          \
-    static inline type Vec##Name##Back(Vec##Name##_t vec) { return vec->data[vec->size - 1]; }             \
+    static inline type Vec##Name##Back(Vec##Name##_t vec) { return Vec##Name##At(vec->size - 1); }         \
                                                                                                            \
     /********** ITERATORS **********/                                                                      \
                                                                                                            \
@@ -92,14 +96,14 @@
     static inline type *Vec##Name##Begin(Vec##Name##_t vec) { return vec->data; };                         \
     static inline const type *Vec##Name##CBegin(Vec##Name##_t vec) { return vec->data; };                  \
     /* Returns an iterator to the end */                                                                   \
-    static inline type *Vec##Name##End(Vec##Name##_t vec) { return vec->data + vec->_cap; };               \
-    static inline const type *Vec##Name##CEnd(Vec##Name##_t vec) { return vec->data + vec->_cap; };        \
+    static inline type *Vec##Name##End(Vec##Name##_t vec) { return vec->data + vec->size; };               \
+    static inline const type *Vec##Name##CEnd(Vec##Name##_t vec) { return vec->data + vec->size; };        \
     /* Returns a reverse iterator to the beginning */                                                      \
-    static inline type *Vec##Name##RBegin(Vec##Name##_t vec) { return vec->data + vec->_cap - 1; };        \
-    static inline const type *Vec##Name##CRBegin(Vec##Name##_t vec) { return vec->data + vec->_cap - 1; }; \
+    static inline type *Vec##Name##RBegin(Vec##Name##_t vec) { return vec->data + vec->size - 1; };        \
+    static inline const type *Vec##Name##CRBegin(Vec##Name##_t vec) { return vec->data + vec->size - 1; }; \
     /* Returns a reverse iterator to the end */                                                            \
-    static inline type *Vec##Name##REnd(Vec##Name##_t vec) { return vec->data + vec->_cap; };              \
-    static inline const type *Vec##Name##CREnd(Vec##Name##_t vec) { return vec->data + vec->_cap; };       \
+    static inline type *Vec##Name##REnd(Vec##Name##_t vec) { return vec->data + vec->size; };              \
+    static inline const type *Vec##Name##CREnd(Vec##Name##_t vec) { return vec->data + vec->size; };       \
                                                                                                            \
     /********** CAPACITY **********/                                                                       \
                                                                                                            \
