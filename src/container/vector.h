@@ -174,6 +174,8 @@
                                                                                                            \
     /* Fills vector with specific element */                                                               \
     static inline int Vec##Name##Fill(Vec##Name##_t vec, size_t start, size_t count, type elem);           \
+    /* Sort vector as list order */                                                                        \
+    static inline int Vec##Name##Sort(Vec##Name##_t vec, size_t *list);                                    \
     /* Inserts elements */                                                                                 \
     static inline int Vec##Name##InsertElems(Vec##Name##_t vec, size_t i, size_t elemNum, ...);
 #endif
